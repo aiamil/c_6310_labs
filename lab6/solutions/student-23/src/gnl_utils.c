@@ -1,8 +1,12 @@
 #include "../inc/txtfile.h"
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif
+
 char	*extract_line(char *buffer)
 {
-	int	i;
+	int		i;
 	char	*line;
 
 	i = 0;
@@ -11,13 +15,13 @@ char	*extract_line(char *buffer)
 	if (buffer[i] == '\n')
 		i++;
 
-	line = ft_substr_gnl(buffer, 0, i);
+	line = ft_substr(buffer, 0, i);
 	return (line);
 }
 
 char	*update_buffer(char *buffer)
 {
-	int	i;
+	int		i;
 	char	*new_buffer;
 
 	i = 0;
@@ -30,16 +34,32 @@ char	*update_buffer(char *buffer)
 		return (NULL);
 	}
 
-	new_buffer = ft_strdup_gnl(buffer + i + 1);
+	new_buffer = ft_strdup(buffer + i + 1);
 	free(buffer);
 	return (new_buffer);
+}
+
+int	find_newline(char *buffer)
+{
+	int	i;
+
+	if (!buffer)
+		return (0);
+	i = 0;
+	while (buffer[i])
+	{
+		if (buffer[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 char	*read_to_buffer(int fd, char *buffer)
 {
 	char	*tmp;
 	char	*read_buf;
-	int	bytes;
+	int		bytes;
 
 	read_buf = malloc(BUFFER_SIZE + 1);
 	if (!read_buf)
@@ -55,7 +75,7 @@ char	*read_to_buffer(int fd, char *buffer)
 			return (NULL);
 		}
 		read_buf[bytes] = '\0';
-		tmp = ft_strjoin_gnl(buffer, read_buf);
+		tmp = ft_strjoin(buffer, read_buf);
 		free(buffer);
 		buffer = tmp;
 	}

@@ -1,6 +1,11 @@
 #include "../inc/txtfile.h"
 
+#ifndef BUFFER_SIZE // размер буфера для чтения из файла
+# define BUFFER_SIZE 32
+#endif
+
 char	*get_next_line(int fd)
+
 {
 	static char	*buffer;
 	char		*line;
