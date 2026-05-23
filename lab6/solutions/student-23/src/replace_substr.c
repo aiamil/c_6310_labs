@@ -5,15 +5,17 @@ char	**replace_substr(char **lines,
 		const char *new_str)
 {
 	char	**result;
-	int		count;
 	int		i;
+	int		count;
 
 	if (!lines || !old || !new_str)
 		return (NULL);
+	
 	count = count_lines_array(lines);
-	result = ft_calloc(count + 1, sizeof(char *));
+	result = (char **)ft_calloc(count + 1, sizeof(char *));
 	if (!result)
 		return (NULL);
+	
 	i = 0;
 	while (i < count)
 	{
